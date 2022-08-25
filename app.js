@@ -33,7 +33,7 @@ app.use('/api/v1', userRouter);
 
 // global express error handler
 app.all('*', (req, res,next) => {
-   next(new AppError(`Error 🔥 : ${req.originalUrl}`, 404))
+   next(new AppError(`Error 🔥 : The given ${req.originalUrl}`, 404))
 })
 
 
