@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 // configuring the .env file to serve file
 dotEnv.config();
-const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD)
+const DB = process.env.DATABASE
 
 
 // database Integrated to mongoDB
