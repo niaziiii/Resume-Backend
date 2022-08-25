@@ -30,7 +30,12 @@ app.use(cookieParser())
 
 // main user router
 app.use('/api/v1', userRouter);
-
+app.use('/',(req,res )=>{
+   res.status(200).json({
+      status : "success",
+      message : "your are viewing Mk Niazi application api"
+   })
+})
 // global express error handler
 app.all('*', (req, res,next) => {
    next(new AppError(`Error 🔥 : The given ${req.originalUrl}`, 404))
