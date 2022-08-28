@@ -5,6 +5,8 @@ const cors = require('cors')
 const compression = require('compression')
 
 const userRouter = require('./Router/UserRouter');
+const pdfRouter = require('./Router/PdfRouter');
+
 const mainErrorHandler = require('./Utilties/errorController');
 const AppError = require('./Utilties/appError');
 
@@ -23,13 +25,15 @@ app.options('*', cors())
 
 
 // body parsers & cookies
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser())
+app.use(bodyParser.json({limit : '10kb'}));
+app.use(bodyParser.urlencoded({extended : true, limit:'10kb'}))
+app.use(cookieParser());
 
 
 // main user router
 app.use('/api/v1', userRouter);
+app.use('/api/v1/resume',pdfRouter);
+
 app.use('/',(req,res )=>{
    res.status(200).json({
       status : "success",
@@ -46,4 +50,5 @@ app.use(mainErrorHandler)
 
 // default export app module
 module.exports = app;
+
 

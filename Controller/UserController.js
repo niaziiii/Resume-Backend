@@ -18,7 +18,7 @@ const createSendTokenCookie = (user, statusCode, res) => {
     };
 
     cookieOptions.secure = true;
-    res.cookie('jwt', token, cookieOptions)
+    res.cookie('jwt32', token, cookieOptions)
     user.password = undefined;
 
     res.status(statusCode).json({
@@ -82,6 +82,7 @@ exports.isLoggedIn = catchAsync(async (req, res,next) => {
     if (!freshUser) {
         return next(new AppError('The user is not belong to this token! Please login to get access', 401));
     }
+    
     
     createSendTokenCookie(freshUser, 200, res)
 
