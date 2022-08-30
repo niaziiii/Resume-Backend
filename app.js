@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 // main user router
 app.use('/api/v1', userRouter);
-app.use('/api/v1/resume',pdfRouter);
+app.use('/api/v1/resume',cors(),pdfRouter);
 
 app.use('/',(req,res )=>{
    res.status(200).json({

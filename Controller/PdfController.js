@@ -17,6 +17,7 @@ exports.createPDF = (req, res, next) => {
         str = ''
 
         Promise.resolve()
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.status(201).json({
             status: 'success'
         })
@@ -37,6 +38,8 @@ exports.donwloadPDF = async (req, res) => {
                 status: 'error'
             })
         }
+        
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.status(201).send(data)
     })
 
