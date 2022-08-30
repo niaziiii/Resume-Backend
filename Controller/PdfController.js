@@ -3,26 +3,46 @@
 const pdfTemp = require('./../Html-pdf/htmlPDF')
 const pdf = require('html-pdf')
 const catchAsync = require('../Utilties/catchAsyncError')
+const path = require('path')
+const fs = require('fs')
 
+exports.createPDF = (req, res, next) => {
+    try {
 
-exports.createPDF = (req,res,next) => {
-    console.log(req.body);
-    pdf.create(pdfTemp.html(),{}).toFile('Controller/resumes/file.pdf', (err)=>{
-        if(err) Promise.reject()
-    })
-    
-    Promise.resolve()
-    res.status(201).json({
-        status:'success'
-    })
+        let str = pdfTemp.html(req.body.data.data);
+
+        pdf.create(str, {}).toFile(`Controller/resumes/${req.body.data.key}.pdf`, (err) => {
+            if (err) Promise.reject()
+        })
+        str = ''
+
+        Promise.resolve()
+        res.status(201).json({
+            status: 'success'
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(401).json({
+            status: 'error'
+        })
+    }
 }
 
 
-exports.donwloadPDF = (req,res) => {
- res.status(201).sendFile(`${__dirname}/resumes/file.pdf`)   
+exports.donwloadPDF = async (req, res) => {
+    const fileName = req.body.data.key;
+    await fs.readFile(path.resolve(`Controller/resumes/${fileName}.pdf`), (err, data) => {
+        if (err) {
+            return res.status(401).json({
+                status: 'error'
+            })
+        }
+        res.status(201).send(data)
+    })
+
 }
 
 
-exports.Helper = catchAsync(async (req,res,next) => {
+exports.Helper = catchAsync(async (req, res, next) => {
     next()
 })
