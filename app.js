@@ -24,8 +24,8 @@ app.use(function(req, res, next) {
 app.use(compression());
 
 // cors policy
-app.use(cors())
-app.options('*', cors())
+// app.use(cors())
+// app.options('*', cors())
 
 
 // body parsers & cookies
