@@ -13,19 +13,13 @@ const AppError = require('./Utilties/appError');
 const app = express();
 
 
-
-app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-   next();
- });
  
 // 
 app.use(compression());
 
 // cors policy
-// app.use(cors())
-// app.options('*', cors())
+app.use(cors())
+app.options('*', cors())
 
 
 // body parsers & cookies
@@ -36,7 +30,7 @@ app.use(cookieParser());
 
 // main user router
 app.use('/api/v1', userRouter);
-app.use('/api/v1/resume',cors(),pdfRouter);
+app.use('/api/v1/resume',pdfRouter);
 
 app.use('/',(req,res )=>{
    res.status(200).json({
