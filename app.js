@@ -20,7 +20,8 @@ app.use(compression());
 // cors policy
 app.use(cors())
 const corsOptions ={
-    origin:'*', 
+    origin:'http://localhost:3000', 
+    methods: ['GET','POST'],
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
