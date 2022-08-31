@@ -11,7 +11,7 @@ exports.createPDF = (req, res, next) => {
 
         let str = pdfTemp.html(req.body.data.data);
 
-        pdf.create(str, {}).toFile(`Controller/resumes/${req.body.data.key}.pdf`, (err) => {
+        pdf.create(str, {}).toFile(`${__dirname}/resumes/${req.body.data.key}.pdf`, (err) => {
             if (err) Promise.reject()
         })
         str = ''
@@ -29,19 +29,21 @@ exports.createPDF = (req, res, next) => {
 }
 
 
-exports.donwloadPDF = async (req, res) => {
+exports.donwloadPDF = catchAsync(async (req, res) => {
     const fileName = req.body.data.key;
-    await fs.readFile(path.resolve(`Controller/resumes/${fileName}.pdf`), (err, data) => {
+    await fs.readFile(path.resolve(`${__dirname}/resumes/${fileName}.pdf`), (err, data) => {
         if (err) {
+            console.log(err);
             return res.status(401).json({
-                status: 'error'
+                status: 'error',
+                err
             })
         }
 
         res.status(201).send(data)
     })
 
-}
+})
 
 
 exports.Helper = catchAsync(async (req, res, next) => {

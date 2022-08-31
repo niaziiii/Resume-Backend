@@ -19,24 +19,20 @@ app.use(compression());
 
 // cors policy
 app.use(cors())
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    methods: ['GET','POST'],
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-// app.use(cors(corsOptions));
-// app.all('/*', function(req, res, next) {
-//    res.header("Access-Control-Allow-Origin", "*");
-//    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//    next();
-//  });
+
+app.all('/*', function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+   next();
+ });
 
 // body parsers & cookies
 app.use(bodyParser.json({limit : '10kb'}));
 app.use(bodyParser.urlencoded({extended : true, limit:'10kb'}))
 app.use(cookieParser());
 
+
+app.use(express.static(`${__dirname}/Controller/`));
 
 // main user router
 app.use('/api/v1', userRouter);
